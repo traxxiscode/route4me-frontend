@@ -1,0 +1,882 @@
+/* Add this to your route.css file or replace the existing styles */
+
+/* Company Color Variables */
+:root {
+    --primary-orange: #ff6b35;
+    --primary-blue: #1e3a8a;
+    --light-orange: #ff8c5a;
+    --light-blue: #3b82f6;
+    --dark-orange: #e55a2b;
+    --dark-blue: #1e40af;
+    --orange-gradient: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 100%);
+    --blue-gradient: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+}
+
+/* Override Bootstrap Primary Colors */
+.btn-primary {
+    background: var(--orange-gradient);
+    border-color: var(--primary-orange);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--dark-orange);
+    border-color: var(--dark-orange);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.btn-success {
+    background: var(--blue-gradient);
+    border-color: var(--primary-blue);
+    color: white;
+}
+
+.btn-success:hover {
+    background: var(--dark-blue);
+    border-color: var(--dark-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+}
+
+.btn-refresh {
+    background: var(--blue-gradient);
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-refresh:hover {
+    background: var(--dark-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+}
+
+/* Header Styling */
+.header {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-orange) 100%);
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+    background-size: 30px 30px;
+}
+
+.header-content {
+    position: relative;
+    z-index: 1;
+}
+
+.header-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 0;
+}
+
+/* Logo Container */
+.logo-container {
+    position: relative;
+}
+
+.company-logo {
+    max-height: 60px;
+    transition: transform 0.3s ease;
+}
+
+.company-logo:hover {
+    transform: scale(1.05);
+}
+
+.logo-placeholder {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    color: white;
+}
+
+/* Step Indicator */
+.step-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    margin: 0 1rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    position: relative;
+}
+
+.step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -2rem;
+    width: 2rem;
+    height: 2px;
+    background: #cbd5e1;
+    transform: translateY(-50%);
+}
+
+.step.active {
+    background: var(--orange-gradient);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.step.completed {
+    background: var(--blue-gradient);
+    color: white;
+    transform: scale(1.02);
+}
+
+.step.completed:not(:last-child)::after {
+    background: var(--primary-blue);
+}
+
+.step.active:not(:last-child)::after {
+    background: var(--primary-orange);
+}
+
+/* Card Styling */
+.card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
+    color: white;
+    border-bottom: none;
+    padding: 1.5rem;
+    font-weight: 600;
+}
+
+.card-header h5 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* Driver Selection */
+.driver-selection-item {
+    transition: all 0.3s ease;
+    border: 2px solid #e2e8f0;
+    background: white;
+}
+
+.driver-selection-item:hover {
+    border-color: var(--primary-orange);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.1);
+    transform: translateY(-2px);
+}
+
+.driver-selection-item .form-check-input:checked {
+    background-color: var(--primary-orange);
+    border-color: var(--primary-orange);
+}
+
+/* File Upload Area */
+.file-upload-area {
+    border: 3px dashed #cbd5e1;
+    border-radius: 16px;
+    padding: 3rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    cursor: pointer;
+}
+
+.file-upload-area:hover,
+.file-upload-area.drag-over {
+    border-color: var(--primary-orange);
+    background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+    transform: translateY(-2px);
+}
+
+.file-upload-area .upload-icon {
+    font-size: 3rem;
+    color: var(--primary-orange);
+    margin-bottom: 1rem;
+}
+
+/* Alerts */
+.alert {
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+    color: #166534;
+    border-left: 4px solid #22c55e;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+    color: #dc2626;
+    border-left: 4px solid #ef4444;
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    color: #d97706;
+    border-left: 4px solid #f59e0b;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--light-blue) 100%);
+    color: white;
+    border-left: 4px solid #1e40af;
+}
+
+/* Badges */
+.badge {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.badge.bg-primary {
+    background: var(--orange-gradient) !important;
+}
+
+.badge.bg-success {
+    background: var(--blue-gradient) !important;
+}
+
+.badge.bg-secondary {
+    background: #64748b !important;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    padding: 2rem;
+}
+
+.spinner-border {
+    color: var(--primary-orange);
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Driver Summary */
+.driver-summary-item {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.driver-summary-item:hover {
+    border-color: var(--primary-orange);
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.1);
+}
+
+/* Route Results */
+.route-results .card {
+    border-left: 4px solid var(--primary-orange);
+}
+
+.route-results .card.success {
+    border-left-color: var(--primary-blue);
+}
+
+/* Header button enhancements */
+.header-buttons .btn {
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.header-buttons .btn-success {
+    background: var(--blue-gradient);
+    border: none;
+    color: white;
+}
+
+.header-buttons .btn-success:hover {
+    background: var(--dark-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+}
+
+.header-buttons .btn-outline-primary {
+    background: var(--orange-gradient);
+    border: none;
+    color: white;
+}
+
+.header-buttons .btn-outline-primary:hover {
+    background: var(--dark-orange);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+/* Driver selection card header buttons */
+.card-header .btn-outline-primary {
+    background: var(--orange-gradient);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+
+.card-header .btn-outline-primary:hover {
+    background: var(--dark-orange);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.card-header .btn-outline-secondary {
+    background: var(--blue-gradient);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+
+.card-header .btn-outline-secondary:hover {
+    background: var(--dark-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header-title {
+        font-size: 2rem;
+    }
+    
+    .step-indicator {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .step {
+        min-width: auto;
+        margin: 0.5rem;
+    }
+    
+    .step:not(:last-child)::after {
+        display: none;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Form Controls */
+.form-control:focus {
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+}
+
+.form-check-input:focus {
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+}
+
+/* Address Validation */
+.address-validation-section {
+    margin-top: 1rem;
+}
+
+.invalid-address-item {
+    border-left: 4px solid #f59e0b;
+}
+
+.coverage-details {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+/* Animation Classes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card, .alert {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-orange);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--dark-orange);
+}
+/* Add these styles to your existing route.css file */
+
+/* Driver search styling */
+.driver-search .input-group-text {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+}
+
+.driver-search input {
+    border-color: #dee2e6;
+}
+
+.driver-search input:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Enhanced driver selection styling */
+.driver-selection-item {
+    transition: all 0.3s ease;
+    border: 1px solid #dee2e6;
+}
+
+.driver-selection-item:hover {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transform: translateY(-1px);
+}
+
+.driver-selection-item .form-check-input:checked ~ .form-check-label {
+    color: #0d6efd;
+}
+
+.driver-info strong {
+    color: #495057;
+    font-size: 1.1rem;
+}
+
+/* Starting location button group styling */
+.starting-location-selection .btn-group {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.starting-location-selection .btn-check:checked + .btn-outline-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: white;
+}
+
+.starting-location-selection .btn-outline-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+    color: white;
+}
+
+/* Global loading indicator */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+}
+
+.loading-content p {
+    color: #495057;
+    font-size: 1.1rem;
+}
+
+/* Enhanced address summary styling */
+.addresses-summary .card {
+    border: 1px solid #dee2e6;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.problem-types-grid {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.problem-type-item {
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    background-color: #f8f9fa;
+    transition: background-color 0.2s ease;
+}
+
+.problem-type-item:hover {
+    background-color: #e9ecef;
+}
+
+.problem-type-icon {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+}
+
+.badge-lg {
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+}
+
+/* Enhanced driver summary styling */
+.driver-summary-item .card {
+    border: 1px solid #dee2e6;
+    transition: box-shadow 0.2s ease;
+}
+
+.driver-summary-item .card:hover {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.driver-summary-item .card-body {
+    padding: 0.75rem 1rem;
+}
+
+/* Progress bar styling */
+.progress {
+    background-color: #e9ecef;
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+.progress-bar {
+    transition: width 0.6s ease;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .driver-selection-item .row {
+        flex-direction: column;
+    }
+    
+    .driver-selection-item .col-md-6:first-child {
+        margin-bottom: 1rem;
+    }
+    
+    .starting-location-selection .btn-group {
+        flex-direction: column;
+    }
+    
+    .starting-location-selection .btn-group .btn {
+        border-radius: 0.375rem !important;
+        margin-bottom: 0.25rem;
+    }
+    
+    .starting-location-selection .btn-group .btn:last-child {
+        margin-bottom: 0;
+    }
+    
+    .problem-types-grid {
+        max-height: 250px;
+    }
+    
+    .loading-content {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+}
+
+/* Animation for step transitions */
+.card {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Enhanced form styling */
+.form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.form-check-input:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Better spacing for address validation */
+.invalid-address-item {
+    border-left: 4px solid #ffc107;
+}
+
+.invalid-address-item:hover {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Enhanced alert styling */
+.alert {
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.alert-success {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+.btn-outline-primary {
+    margin-left: 10px;
+}
+
+#addDriverCard .row {
+    margin-bottom: 1rem;
+}
+
+#addDriverCard h6 {
+    color: #0d6efd;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+#driverTypes {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.route-results-header {
+    min-width: 0;
+    flex-wrap: wrap;
+}
+
+.route-results-header .btn-group {
+    min-width: 0;
+    max-width: 100%;
+    flex-shrink: 1;
+}
+
+.route-results-header .btn {
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* Fix for button cutoff and better responsive design */
+.d-flex.justify-content-between.align-items-center.mb-3 {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.route-btn-group {
+    min-width: 0;
+    max-width: 100%;
+    flex-shrink: 0;
+}
+
+.route-btn-group .btn {
+    white-space: nowrap;
+    padding: 0.5rem 1rem;
+}
+
+/* Enhanced route card styling for better UX */
+.route-card {
+    transition: all 0.3s ease;
+}
+
+.route-card.route-target-highlight {
+    border-width: 2px !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2) !important;
+    cursor: pointer;
+}
+
+.route-card.route-target-highlight:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3) !important;
+}
+
+/* Visual feedback for selected addresses */
+.list-group-item.bg-warning.bg-opacity-25 {
+    border-left: 4px solid #ffc107 !important;
+    animation: pulse-warning 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-warning {
+    0%, 100% { 
+        background-color: rgba(255, 193, 7, 0.25);
+        transform: scale(1);
+    }
+    50% { 
+        background-color: rgba(255, 193, 7, 0.35);
+        transform: scale(1.01);
+    }
+}
+
+/* Improved button group spacing */
+.btn-group.route-btn-group .btn {
+    border-radius: 0.375rem !important;
+    margin-right: 0.25rem;
+}
+
+.btn-group.route-btn-group .btn:last-child {
+    margin-right: 0;
+}
+
+/* Better responsive behavior for smaller screens */
+@media (max-width: 768px) {
+    .d-flex.justify-content-between.align-items-center.mb-3 {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .route-btn-group {
+        align-self: stretch;
+        display: flex;
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+    
+    .route-btn-group .btn {
+        flex: 1;
+        margin: 0 0.125rem;
+    }
+}
+
+/* Enhanced visual feedback for route targeting */
+.route-results .card.route-target-highlight::before {
+    content: "Click here to move address";
+    position: absolute;
+    top: -2px;
+    right: 10px;
+    background: #22c55e;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0 0 0.375rem 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    z-index: 10;
+}
+
+/* Better spacing for address items */
+.list-group-item .d-flex {
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.address-edit-controls {
+    flex-shrink: 0;
+}
+
+/* Improved alert positioning and animation */
+.alert {
+    position: relative;
+    animation: slideInFromTop 0.3s ease-out;
+}
+
+@keyframes slideInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

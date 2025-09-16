@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route4Me Integration</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="route.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="row align-items-center">
+                    <div class="col-md-2 text-center text-md-start mb-3 mb-md-0">
+                        <div class="logo-container">
+                            <img src="https://traxxisgps.com/wp-content/uploads/elementor/thumbs/Traxxis-refresh-logo_horizontal-min-1-qjgvd5cr9kxu5eay6trn10pbylz31ardqnqdluuew0.webp" alt="Company Logo" class="company-logo" 
+                                onerror="this.style.display='none'; document.getElementById('logo-placeholder').style.display='block';">
+                            <div id="logo-placeholder" class="logo-placeholder" style="display:none;">
+                                <div class="logo-icon">
+                                    <i class="fas fa-route"></i>
+                                </div>
+                                <small>Traxxis GPS</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <h1 class="header-title">
+                            <i class="fas fa-route me-3"></i>Route4Me Integration
+                        </h1>
+                        <p class="header-subtitle mt-2">
+                            Create optimized routes for your drivers using Route4Me
+                        </p>
+                    </div>
+                    <div class="col-md-3 text-center text-md-end">
+                        <div class="header-buttons d-flex justify-content-end gap-2 flex-wrap">
+                            <button class="btn btn-success" onclick="initializeAppWithStyles()">
+                                <i class="fas fa-play me-2"></i>Home
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container main-container" id="route4meApp">
+        <!-- Alert Messages -->
+        <div id="alertContainer"></div>
+        
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step active" id="step1">
+                <i class="fas fa-user-check fa-2x mb-2"></i>
+                <div>Validate User</div>
+            </div>
+            <div class="step" id="step2">
+                <i class="fas fa-users fa-2x mb-2"></i>
+                <div>Select Drivers</div>
+            </div>
+            <div class="step" id="step3">
+                <i class="fas fa-file-upload fa-2x mb-2"></i>
+                <div>Upload Addresses</div>
+            </div>
+            <div class="step" id="step4">
+                <i class="fas fa-route fa-2x mb-2"></i>
+                <div>Create Routes</div>
+            </div>
+        </div>
+
+        <!-- User Validation Section -->
+        <div class="card" id="userValidationCard">
+            <div class="card-header">
+                <h5>
+                    <i class="fas fa-user-check me-2"></i>User Validation
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="text-center" id="userValidationContent">
+                    <div class="loading-spinner">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Validating...</span>
+                        </div>
+                        <p class="mt-2 mb-0">Validating user credentials...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Driver Selection Section -->
+        <div class="card hidden" id="driverSelectionCard">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="fas fa-users me-2"></i>Select Drivers
+                    <span class="badge bg-light text-dark ms-2" id="driverCount">0</span>
+                </h5>
+                <div class="header-buttons d-flex gap-2">
+                    <button class="btn btn-outline-primary btn-sm" onclick="showAddDriverForm()">
+                        <i class="fas fa-user-plus me-2"></i>Add Driver
+                    </button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="showJobTypesForm()">
+                        <i class="fas fa-tags me-2"></i>Add Job Types
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-3">Select the drivers you want to create routes for:</p>
+                <div class="driver-selection" id="driverList">
+                    <!-- Driver list will be populated here -->
+                </div>
+                <div class="mt-3">
+                    <button class="btn btn-primary" onclick="proceedToAddressUpload()" id="proceedToUploadBtn" disabled>
+                        <i class="fas fa-arrow-right me-2"></i>Proceed to Address Upload
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Address Upload Section -->
+        <div class="card hidden" id="addressUploadCard">
+            <div class="card-header">
+                <h5>
+                    <i class="fas fa-file-upload me-2"></i>Upload Addresses
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-3">Upload an Excel file containing addresses in the "Address 1" column:</p>
+                <div class="file-upload-area" id="fileUploadArea">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h5>Drop your Excel file here</h5>
+                    <p class="text-muted">or click to browse</p>
+                    <input type="file" id="fileInput" accept=".xlsx,.xls" class="d-none">
+                </div>
+                <div class="mt-3 hidden" id="fileInfo">
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <span id="fileDetails"></span>
+                    </div>
+                    <button class="btn btn-primary" onclick="proceedToRouteCreation()">
+                        <i class="fas fa-arrow-right me-2"></i>Proceed to Route Creation
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Route Creation Section -->
+        <div class="card hidden" id="routeCreationCard">
+            <div class="card-header">
+                <h5>
+                    <i class="fas fa-route me-2"></i>Create Routes
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-users me-2"></i>Selected Drivers</h6>
+                        <div id="selectedDriversList" class="mb-3"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-map-marker-alt me-2"></i>Uploaded Addresses</h6>
+                        <div id="addressesSummary" class="mb-3"></div>
+                    </div>
+                </div>
+                
+                <!-- New Route Scheduling Section -->
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <h6><i class="fas fa-clock me-2"></i>Route Schedule</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="routeDate" class="form-label">Route Date</label>
+                                <input type="date" class="form-control" id="routeDate" required>
+                                <div class="form-text">Select the date for the routes</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="routeTime" class="form-label">Start Time</label>
+                                <input type="time" class="form-control" id="routeTime" value="09:00" required>
+                                <div class="form-text">Select the start time for the routes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button class="btn btn-success btn-lg" onclick="createRoutes()">
+                        <i class="fas fa-plus-circle me-2"></i>Create Routes
+                    </button>
+                </div>
+                <div class="mt-3 hidden" id="routeCreationResults">
+                    <!-- Results will be shown here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card hidden" id="addDriverCard">
+        <div class="card-header">
+            <h5>
+                <i class="fas fa-user-plus me-2"></i>Add New Driver
+            </h5>
+        </div>
+        <div class="card-body">
+            <form id="addDriverForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-route me-2"></i>Route4Me Information</h6>
+                        <div class="mb-3">
+                            <label for="memberEmail" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="memberEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="memberFirstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="memberFirstName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="memberLastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="memberLastName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="memberPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="memberPassword" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-cog me-2"></i>Driver Configuration</h6>
+                        <div class="mb-3">
+                            <label for="driverHq" class="form-label">HQ Address</label>
+                            <input type="text" class="form-control" id="driverHq" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="driverHome" class="form-label">Home Address</label>
+                            <input type="text" class="form-control" id="driverHome" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="driverMaxDestinations" class="form-label">Max Destinations</label>
+                            <input type="number" class="form-control" id="driverMaxDestinations" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="driverTypes" class="form-label">Job Types</label>
+                            <div id="jobTypesSelection" class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+                                <div class="text-center text-muted">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading job types...
+                                </div>
+                            </div>
+                            <small class="form-text text-muted">Select the types of services this driver can handle</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-secondary me-2" onclick="cancelAddDriver()">
+                        <i class="fas fa-times me-2"></i>Cancel
+                    </button>
+                    <button type="submit" class="btn btn-success" onclick="handleAddDriverSubmit()">
+                        <i class="fas fa-plus me-2"></i>Add Driver
+                    </button>
+                </div>
+            </form>
+            <div class="mt-3 hidden" id="addDriverResults">
+                <!-- Results will be shown here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="card hidden" id="jobTypesCard">
+        <div class="card-header">
+            <h5>
+                <i class="fas fa-tags me-2"></i>Manage Job Types
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6><i class="fas fa-plus me-2"></i>Add New Job Type</h6>
+                    <form id="addJobTypeForm">
+                        <div class="mb-3">
+                            <label for="newJobType" class="form-label">Job Type Name</label>
+                            <input type="text" class="form-control" id="newJobType" required 
+                                placeholder="e.g., BOUNDARY SURVEY">
+                            <small class="form-text text-muted">Job type will be converted to uppercase</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newJobDuration" class="form-label">Duration (minutes)</label>
+                            <input type="number" class="form-control" id="newJobDuration" min="1" required>
+                        </div>
+                        <button type="submit" class="btn btn-success" onclick="handleAddJobType(event)">
+                            <i class="fas fa-plus me-2"></i>Add Job Type
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <h6><i class="fas fa-list me-2"></i>Current Job Types</h6>
+                    <div id="jobTypesList" class="border p-3 rounded" style="max-height: 300px; overflow-y: auto;">
+                        <div class="text-center text-muted">
+                            <i class="fas fa-spinner fa-spin"></i> Loading job types...
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-3 text-center">
+                <button type="button" class="btn btn-secondary" onclick="cancelJobTypes()">
+                    <i class="fas fa-arrow-left me-2"></i>Back to App
+                </button>
+            </div>
+            
+            <div class="mt-3 hidden" id="jobTypesResults">
+                <!-- Results will be shown here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="route.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+    "name": "Route4Me AddIn",
+    "supportEmail": "parker@traxxisgps.com",
+    "version": "1.0",
+    "items": [
+        {
+            "url": "traxxiscode.github.io/route4me-frontend/route.html",
+            "category": "AddIns",
+            "menuName": {
+                "en": "Route4Me AddIn"
+            }
+        }
+    ],
+    "isSigned": false
+}

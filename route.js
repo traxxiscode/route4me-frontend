@@ -3036,7 +3036,9 @@ async function createRoutes() {
                 selected_drivers: formattedDrivers,
                 addresses: uploadedAddresses,
                 route_date: routeDateInput.value,
-                route_time: routeTimeInput.value
+                route_time: routeTimeInput.value,
+                database: database,
+                session_id: sessionID
             })
         });
         

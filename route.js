@@ -73,7 +73,7 @@ function getDatabaseName() {
 
 function openUserGuide() {
 
-    window.open('Route4Me Upload Tool User Guide.pdf', '_blank');
+    window.open('https://traxxiscode.github.io/route4me-frontend/Route4Me Upload Tool User Guide.pdf', '_blank');
 
 }
 

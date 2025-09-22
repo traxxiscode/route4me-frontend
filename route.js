@@ -71,6 +71,12 @@ function getDatabaseName() {
     }); 
 }
 
+function openUserGuide() {
+
+    window.open('Route4Me Upload Tool User Guide.pdf', '_blank');
+
+}
+
 /**
  * Prompt user to enter their email for validation
  */
